@@ -1,6 +1,6 @@
 #!/bin/bash
 cd /workdir
-git ls-remote --exit-code origin
+git ls-remote --exit-code origin 2> /dev/null
 if test $? = 0; then
 	echo 'Beginning teardown'
 	UUID=$(cat /proc/sys/kernel/random/uuid)
@@ -11,6 +11,11 @@ if test $? = 0; then
 	git push origin wip-$UUID
 	echo "Teardown located at  wip-$UUID branch"
 else
+	CLEAN=$(git status --porcelain | wc -l);
+	if test $CLEAN = 0; then
+		echo "No cleanup needed.  Finishing Teardown";
+		exit 0;
+	fi
 	echo "NO ORIGIN REMOTE WAS FOUND.  PLEASE ADD A REMOTE BEFORE TEARDOWN!"
 	exit 1
 fi

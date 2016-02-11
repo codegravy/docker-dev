@@ -5,10 +5,10 @@ if [ -z "$NAME" ]; then
 	exit 1
 fi
 if [ -z "$GITREPO" ]; then
-	docker create -it --name=$NAME --link docker-host:docker -e GITINIT=true dev /bin/bash
+	docker create -it --name=$NAME --link docker-host:docker -e GITINIT=true dev /bin/bash > /dev/null
 else
-	docker create -it --name=$NAME --link docker-host:docker -e GITREPO=$GITREPO dev /bin/bash
+	docker create -it --name=$NAME --link docker-host:docker -e GITREPO=$GITREPO dev /bin/bash > /dev/null
 fi
-echo $NAME
-docker start $NAME
-docker exec $NAME /git/setup
+docker start $NAME > /dev/null
+docker exec $NAME /git/setup >/dev/null
+echo "READY"
