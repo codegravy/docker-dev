@@ -1,0 +1,14 @@
+GITREPO=$2
+NAME=$1
+if [ -z "$NAME" ]; then
+	echo "No name entered.  Cannot continue"
+	exit 1
+fi
+if [ -z "$GITREPO" ]; then
+	docker create -it --name=$NAME --link docker-host:docker -e GITINIT=true dev /bin/bash
+else
+	docker create -it --name=$NAME --link docker-host:docker -e GITREPO=$GITREPO dev /bin/bash
+fi
+echo $NAME
+docker start $NAME
+docker exec $NAME /git/setup

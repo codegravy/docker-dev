@@ -1,0 +1,16 @@
+#!/bin/bash
+cd /workdir
+git ls-remote --exit-code origin
+if test $? = 0; then
+	echo 'Beginning teardown'
+	UUID=$(cat /proc/sys/kernel/random/uuid)
+	git branch wip-$UUID
+	git checkout wip-$UUID
+	git add .
+	git commit -m 'WIP commit due to teardown.'
+	git push origin wip-$UUID
+	echo "Teardown located at  wip-$UUID branch"
+else
+	echo "NO ORIGIN REMOTE WAS FOUND.  PLEASE ADD A REMOTE BEFORE TEARDOWN!"
+	exit 1
+fi
