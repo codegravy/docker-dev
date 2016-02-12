@@ -10,5 +10,5 @@ else
 	docker create -it --name=$NAME --link docker-host:docker -e GITREPO=$GITREPO dev /bin/bash > /dev/null
 fi
 docker start $NAME > /dev/null
-docker exec $NAME /git/setup >/dev/null
+docker exec $NAME /usr/local/bin/setup >/dev/null
 echo "READY"

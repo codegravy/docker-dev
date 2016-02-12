@@ -4,7 +4,7 @@ if [ -z "$NAME" ]; then
 	exit 1
 fi
 docker start $NAME > /dev/null
-docker exec $NAME /git/teardown > /dev/null 2> /dev/null
+docker exec $NAME /usr/local/bin/teardown > /dev/null 2> /dev/null
 CODE=$?
 if test $CODE = 0; then
 	docker stop $NAME > /dev/null

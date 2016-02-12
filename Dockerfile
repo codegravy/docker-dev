@@ -10,14 +10,15 @@ RUN chmod +x /usr/bin/docker
 
 ENV DOCKER_HOST='tcp://docker:2375'
 
-ADD ./initGit /git
-ADD ./cloneGit /git
-ADD ./setup /git
-ADD ./teardown /git
+ADD ./initGit /usr/local/bin
+ADD ./cloneGit /usr/local/bin
+ADD ./setup /usr/local/bin
+ADD ./teardown /usr/local/bin
+ADD ./activate /usr/local/bin
+
+ADD ./known_hosts /root/.ssh/known_hosts
 
 ADD ./privKey /root/.ssh/id_rsa
 ADD ./privKey.pub /root/.ssh/id_rsa.pub
-
-ADD ./known_hosts /root/.ssh/known_hosts
 
 CMD ['/bin/bash']

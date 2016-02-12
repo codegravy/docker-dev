@@ -1,0 +1,9 @@
+if test $1 = "node"; then
+	cd /tmp
+	wget https://raw.githubusercontent.com/tj/n/master/bin/n
+	cp n /usr/local/bin
+	chmod +x /usr/local/bin/n
+	n lts
+	echo "Node N Installed"
+fi
+

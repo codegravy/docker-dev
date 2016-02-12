@@ -3,8 +3,8 @@ git config --global user.name "Blixa Morgan"
 git config --global user.email "blixa@projectmakeit.com"
 if [ "$GITINIT" ]; then
 	echo "Generating a new git repo.";
-	/git/initGit;
+	initGit;
 else
 	echo "Cloning from $GITREPO.";
-	/git/cloneGit;
+	cloneGit;
 fi
