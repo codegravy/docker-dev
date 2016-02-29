@@ -1,0 +1,3 @@
+docker start docker-host
+docker start $1
+docker attach $1

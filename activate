@@ -4,6 +4,27 @@ if test $1 = "node"; then
 	cp n /usr/local/bin
 	chmod +x /usr/local/bin/n
 	n lts
+	npm install -g gulp
+	cd /workdir
+	if [ ! -f ./package.json ]; then
+		echo "{}" > ./package.json
+	fi
+	npm install
 	echo "Node N Installed"
 fi
 
+if test $1 = "custom"; then
+	if [ ! -f ./setup.sh ]; then
+		echo "No custom setup script found.";
+		exit 1
+	fi
+	./setup.sh
+fi
+
+if test $1 = "python"; then
+	apt-get install python -y
+fi
+
+if test $1 = "build"; then
+	apt-get install build-essential -y
+fi

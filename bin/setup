@@ -1,3 +1,4 @@
+docker start docker-host
 GITREPO=$2
 NAME=$1
 if [ -z "$NAME" ]; then
@@ -12,3 +13,5 @@ fi
 docker start $NAME > /dev/null
 docker exec $NAME /usr/local/bin/setup >/dev/null
 echo "READY"
+echo "Attaching to container now"
+docker attach $NAME
