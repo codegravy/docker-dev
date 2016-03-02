@@ -13,16 +13,16 @@ if [ -z "$NAME" ]; then
 fi
 mkdir -p $HOME/.local/share/docker_dev/$NAME
 if [ -z "$GITREPO" ]; then
-	docker create -it --name=$NAME -e GITINIT=true -v /workdir:$HOME/.local/share/docker_dev/$NAME $DOCKER_DEV_BOOT mrmakeit/dev /bin/bash > /dev/null
+	docker create -it --name=$NAME -e GITINIT=true -v $HOME/.local/share/docker_dev/$NAME:/workdir $DOCKER_DEV_BOOT mrmakeit/dev /bin/bash > /dev/null
 else
-	docker create -it --name=$NAME -e GITREPO=$GITREPO -v /workdir:$HOME/.local/share/docker_dev/$NAME $DOCKER_DEV_BOOT mrmakeit/dev /bin/bash > /dev/null
+	docker create -it --name=$NAME -e GITREPO=$GITREPO -v $HOME/.local/share/docker_dev/$NAME:/workdir $DOCKER_DEV_BOOT mrmakeit/dev /bin/bash > /dev/null
 fi
 echo "injecting ssh key"
 if [ ! -f ~/.ssh/id_rsa ]; then
 	echo "key not found. Cannot include it in the docker container.  Please create a key using ssh-keygen."
 else
-	docker cp ~/.ssh/docker $NAME:/root/.ssh/id_rsa
-	docker cp ~/.ssh/docker.pub $NAME:/root/.ssh/id_rsa.pub
+	docker cp ~/.ssh/id_rsa $NAME:/root/.ssh/id_rsa
+	docker cp ~/.ssh/id_rsa.pub $NAME:/root/.ssh/id_rsa.pub
 fi
 docker start $NAME > /dev/null
 docker exec $NAME /usr/local/bin/setup >/dev/null

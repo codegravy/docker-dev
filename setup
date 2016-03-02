@@ -8,3 +8,9 @@ else
 	echo "Cloning from $GITREPO.";
 	cloneGit;
 fi
+if [ -f "package.json" ]; then
+	activate node
+fi
+if [ -f "require.txt" ]; then
+	activate python
+fi
