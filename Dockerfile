@@ -18,7 +18,4 @@ ADD ./activate /usr/local/bin
 
 ADD ./known_hosts /root/.ssh/known_hosts
 
-ADD ./privKey /root/.ssh/id_rsa
-ADD ./privKey.pub /root/.ssh/id_rsa.pub
-
 CMD ['/bin/bash']

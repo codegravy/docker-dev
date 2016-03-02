@@ -1,14 +1,27 @@
-docker start docker-host
+if [ `id -u` -ne 0 ]; then
+	sudo `which $0` "$@"
+	exit 1
+fi
 GITREPO=$2
 NAME=$1
+if [ -f ~/.config/dockerdev/dev.conf ]; then
+	. ~/.config/dockerdev/dev.conf;
+fi
 if [ -z "$NAME" ]; then
 	echo "No name entered.  Cannot continue"
 	exit 1
 fi
 if [ -z "$GITREPO" ]; then
-	docker create -it --name=$NAME --link docker-host:docker -e GITINIT=true dev /bin/bash > /dev/null
+	docker create -it --name=$NAME -e GITINIT=true $DOCKER_DEV_BOOT mrmakeit/dev /bin/bash > /dev/null
 else
-	docker create -it --name=$NAME --link docker-host:docker -e GITREPO=$GITREPO dev /bin/bash > /dev/null
+	docker create -it --name=$NAME -e GITREPO=$GITREPO $DOCKER_DEV_BOOT mrmakeit/dev /bin/bash > /dev/null
+fi
+echo "injecting ssh key"
+if [ ! -f ~/.ssh/id_rsa ]; then
+	echo "key not found. Cannot include it in the docker container.  Please create a key using ssh-keygen."
+else
+	docker cp ~/.ssh/docker $NAME:/root/.ssh/id_rsa
+	docker cp ~/.ssh/docker.pub $NAME:/root/.ssh/id_rsa.pub
 fi
 docker start $NAME > /dev/null
 docker exec $NAME /usr/local/bin/setup >/dev/null
