@@ -11,10 +11,11 @@ if [ -z "$NAME" ]; then
 	echo "No name entered.  Cannot continue"
 	exit 1
 fi
+mkdir -p $HOME/.local/share/docker_dev/$NAME
 if [ -z "$GITREPO" ]; then
-	docker create -it --name=$NAME -e GITINIT=true $DOCKER_DEV_BOOT mrmakeit/dev /bin/bash > /dev/null
+	docker create -it --name=$NAME -e GITINIT=true -v /workdir:$HOME/.local/share/docker_dev/$NAME $DOCKER_DEV_BOOT mrmakeit/dev /bin/bash > /dev/null
 else
-	docker create -it --name=$NAME -e GITREPO=$GITREPO $DOCKER_DEV_BOOT mrmakeit/dev /bin/bash > /dev/null
+	docker create -it --name=$NAME -e GITREPO=$GITREPO -v /workdir:$HOME/.local/share/docker_dev/$NAME $DOCKER_DEV_BOOT mrmakeit/dev /bin/bash > /dev/null
 fi
 echo "injecting ssh key"
 if [ ! -f ~/.ssh/id_rsa ]; then

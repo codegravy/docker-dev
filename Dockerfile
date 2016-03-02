@@ -3,6 +3,8 @@ FROM dev_base
 RUN mkdir /workdir
 WORKDIR /workdir
 
+VOLUME /workdir
+
 RUN mkdir /git
 
 ADD https://get.docker.com/builds/Linux/i386/docker-latest /usr/bin/docker
