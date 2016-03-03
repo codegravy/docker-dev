@@ -4,6 +4,15 @@ if [ `id -u` -ne 0 ]; then
 fi
 GITREPO=$2
 NAME=$1
+if [ -f ~/.local/share/docker_dev/containers ]; then
+	while read line
+	do
+		if [ "$line" = "$NAME" ]; then
+			echo "$NAME already exists. Please use attach instead."
+			exit 0
+		fi
+	done < ~/.local/share/docker_dev/containers
+fi
 if [ -f ~/.config/dockerdev/dev.conf ]; then
 	. ~/.config/dockerdev/dev.conf;
 fi
@@ -26,6 +35,7 @@ else
 fi
 docker start $NAME > /dev/null
 docker exec $NAME /usr/local/bin/setup >/dev/null
+echo "$NAME" >> $HOME/.local/share/docker_dev/containers
 echo "READY"
 echo "Attaching to container now"
 docker attach $NAME

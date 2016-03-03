@@ -1,0 +1,9 @@
+containers=""
+while read line
+do
+  containers="$containers $line"
+done < ~/.local/share/docker_dev/containers
+export IFS=" "
+complete -W "$containers" attach
+complete -W "$containers" teardown
+complete -W "$containers" setup
