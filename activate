@@ -21,10 +21,17 @@ if test $1 = "custom"; then
 	./setup.sh
 fi
 
+if test $1 = "devpack"; then
+	while read line
+	do
+		activate $line
+	done < /workdir/.devpack
+fi
+
 if test $1 = "python"; then
 	apt-get install python -y
 fi
 
-if test $1 = "build"; then
+if test $1 = "essentials"; then
 	apt-get install build-essential -y
 fi

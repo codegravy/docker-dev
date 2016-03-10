@@ -7,12 +7,14 @@ if [ -z "$NAME" ]; then
 	echo "No name entered. Cannot continue"
 	exit 1
 fi
-docker start $NAME > /dev/null
-docker exec $NAME /usr/local/bin/teardown > /dev/null 2> /dev/null
+docker start $NAME
+docker exec $NAME /usr/local/bin/teardown
 CODE=$?
 if test $CODE = 0; then
 	docker stop $NAME > /dev/null
 	docker rm $NAME > /dev/null
+	sed -i "/$NAME/d" $HOME/.local/share/docker_dev/containers
+	rm $HOME/.local/share/docker_dev/$NAME -rf
 	echo 'TEARDOWN COMPLETE'
 else
 	echo 'TEARDOWN FAILED'

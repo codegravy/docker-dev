@@ -1,4 +1,9 @@
-FROM dev_base
+FROM ubuntu:15.10
+
+# Basic setup files
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install -y git vim curl wget unzip tar
 
 RUN mkdir /workdir
 WORKDIR /workdir

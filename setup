@@ -8,6 +8,10 @@ else
 	echo "Cloning from $GITREPO.";
 	cloneGit;
 fi
+if [ -f ".devpack" ]; then
+	activate devpack
+	exit 0;
+fi
 if [ -f "package.json" ]; then
 	activate node
 fi
